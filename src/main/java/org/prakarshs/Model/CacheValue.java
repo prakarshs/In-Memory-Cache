@@ -13,7 +13,7 @@ public class CacheValue<V> {
     private V value;
     private long expiryTime;
 
-    boolean isExpired(){
+    public boolean isExpired(){
         return System.currentTimeMillis() > expiryTime;
     }
 }

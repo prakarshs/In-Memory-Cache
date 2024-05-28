@@ -23,17 +23,19 @@ public class CacheIMPL<K,V> implements CacheInterface<K,V> {
     @Override
     public synchronized V get(K key) {
        CacheValue<V> value =  cache.get(key);
-       if(value==null || value)
-        return null;
+       if(value==null || value.isExpired()){
+           cache.remove(key);
+       }
+        return value.getValue();
     }
 
     @Override
-    public void remove(K key) {
-
+    public synchronized void remove(K key) {
+        cache.remove(key);
     }
 
     @Override
     public void clear() {
-
+        cache.clear();
     }
 }
