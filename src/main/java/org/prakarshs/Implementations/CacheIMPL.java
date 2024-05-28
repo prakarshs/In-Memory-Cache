@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.prakarshs.Interfaces.CacheInterface;
+import org.prakarshs.Interfaces.EvictionInterface;
 import org.prakarshs.Model.CacheValue;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,11 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class CacheIMPL<K,V> implements CacheInterface<K,V> {
     private ConcurrentHashMap<K, CacheValue<V>> cache;
+    private EvictionInterface<K> evictionInterface;
     private Long timeToLive;
     @Override
     public void put(K key, V value) {
         CacheValue<V> content = new CacheValue<>(value, System.currentTimeMillis() + timeToLive);
         cache.put(key,content);
+        evictionInterface.keyAccessed(key);
     }
 
     @Override
@@ -25,8 +28,11 @@ public class CacheIMPL<K,V> implements CacheInterface<K,V> {
        CacheValue<V> value =  cache.get(key);
        if(value==null || value.isExpired()){
            cache.remove(key);
+           return null;
        }
+       evictionInterface.keyAccessed(key);
         return value.getValue();
+
     }
 
     @Override
@@ -37,5 +43,10 @@ public class CacheIMPL<K,V> implements CacheInterface<K,V> {
     @Override
     public void clear() {
         cache.clear();
+    }
+
+    public void evict(){
+       K keyToRemove = evictionInterface.evict();
+       cache.remove(keyToRemove);
     }
 }
