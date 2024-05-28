@@ -45,6 +45,11 @@ public class CacheIMPL<K,V> implements CacheInterface<K,V> {
         cache.clear();
     }
 
+    @Override
+    public int getSize() {
+        return cache.size();
+    }
+
     public void evict(){
        K keyToRemove = evictionInterface.evict();
        cache.remove(keyToRemove);

@@ -4,4 +4,6 @@ public interface CacheInterface<K,V> {
     V get(K key);
     void remove(K key);
     void clear();
+    int getSize();
+    void evict();
 }
