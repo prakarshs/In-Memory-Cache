@@ -3,7 +3,6 @@ package org.prakarshs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.prakarshs.Implementations.CacheIMPL;
 import org.prakarshs.Interfaces.CacheInterface;
 
 @Data

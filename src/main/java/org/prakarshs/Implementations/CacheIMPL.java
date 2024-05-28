@@ -3,6 +3,7 @@ package org.prakarshs.Implementations;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.prakarshs.Interfaces.CacheInterface;
 import org.prakarshs.Interfaces.EvictionInterface;
 import org.prakarshs.Model.CacheValue;
